@@ -474,6 +474,8 @@ var Worker_Module_Which;
 	Worker_Module_Which[(Worker_Module_Which["JSON"] = 5)] = "JSON";
 	Worker_Module_Which[(Worker_Module_Which["NODE_JS_COMPAT_MODULE"] = 6)] =
 		"NODE_JS_COMPAT_MODULE";
+	Worker_Module_Which[(Worker_Module_Which["FALLBACK_SERVICE"] = 7)] =
+		"FALLBACK_SERVICE";
 })(
 	(Worker_Module_Which =
 		exports.Worker_Module_Which || (exports.Worker_Module_Which = {}))
@@ -625,6 +627,12 @@ class Worker_Module extends capnp_ts_1.Struct {
 		capnp_ts_1.Struct.setUint16(0, 6, this);
 		capnp_ts_1.Struct.setText(1, value, this);
 	}
+	isFallbackService() {
+		return capnp_ts_1.Struct.getUint16(0, this) === 7;
+	}
+	setFallbackService() {
+		capnp_ts_1.Struct.setUint16(0, 7, this);
+	}
 	toString() {
 		return "Worker_Module_" + super.toString();
 	}
@@ -640,6 +648,7 @@ Worker_Module.DATA = Worker_Module_Which.DATA;
 Worker_Module.WASM = Worker_Module_Which.WASM;
 Worker_Module.JSON = Worker_Module_Which.JSON;
 Worker_Module.NODE_JS_COMPAT_MODULE = Worker_Module_Which.NODE_JS_COMPAT_MODULE;
+Worker_Module.FALLBACK_SERVICE = Worker_Module_Which.FALLBACK_SERVICE;
 Worker_Module._capnp = {
 	displayName: "Module",
 	id: "d9d87a63770a12f3",
@@ -1907,7 +1916,7 @@ Worker_DurableObjectStorage.LOCAL_DISK =
 Worker_DurableObjectStorage._capnp = {
 	displayName: "durableObjectStorage",
 	id: "cc72b3faa57827d4",
-	size: new capnp_ts_1.ObjectSize(8, 9),
+	size: new capnp_ts_1.ObjectSize(8, 10),
 };
 var Worker_Which;
 (function (Worker_Which) {
@@ -2097,6 +2106,12 @@ class Worker extends capnp_ts_1.Struct {
 	initDurableObjectStorage() {
 		return capnp_ts_1.Struct.getAs(Worker_DurableObjectStorage, this);
 	}
+	getModuleFallback() {
+		return capnp_ts_1.Struct.getText(9, this);
+	}
+	setModuleFallback(value) {
+		capnp_ts_1.Struct.setText(9, value, this);
+	}
 	toString() {
 		return "Worker_" + super.toString();
 	}
@@ -2114,7 +2129,7 @@ Worker.DurableObjectNamespace = Worker_DurableObjectNamespace;
 Worker._capnp = {
 	displayName: "Worker",
 	id: "acfa77e88fd97d1c",
-	size: new capnp_ts_1.ObjectSize(8, 9),
+	size: new capnp_ts_1.ObjectSize(8, 10),
 	defaultGlobalOutbound: capnp.readRawPointer(
 		new Uint8Array([
 			0x10, 0x05, 0x40, 0x02, 0x11, 0x05, 0x4a, 0x00, 0x00, 0xff, 0x69, 0x6e,

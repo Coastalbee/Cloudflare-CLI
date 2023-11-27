@@ -168,6 +168,7 @@ export declare enum Worker_Module_Which {
 	WASM = 4,
 	JSON = 5,
 	NODE_JS_COMPAT_MODULE = 6,
+	FALLBACK_SERVICE = 7,
 }
 export declare class Worker_Module extends __S {
 	static readonly ES_MODULE = Worker_Module_Which.ES_MODULE;
@@ -178,6 +179,7 @@ export declare class Worker_Module extends __S {
 	static readonly JSON = Worker_Module_Which.JSON;
 	static readonly NODE_JS_COMPAT_MODULE =
 		Worker_Module_Which.NODE_JS_COMPAT_MODULE;
+	static readonly FALLBACK_SERVICE = Worker_Module_Which.FALLBACK_SERVICE;
 	static readonly _capnp: {
 		displayName: string;
 		id: string;
@@ -214,6 +216,8 @@ export declare class Worker_Module extends __S {
 	getNodeJsCompatModule(): string;
 	isNodeJsCompatModule(): boolean;
 	setNodeJsCompatModule(value: string): void;
+	isFallbackService(): boolean;
+	setFallbackService(): void;
 	toString(): string;
 	which(): Worker_Module_Which;
 }
@@ -735,6 +739,8 @@ export declare class Worker extends __S {
 	setDurableObjectUniqueKeyModifier(value: string): void;
 	getDurableObjectStorage(): Worker_DurableObjectStorage;
 	initDurableObjectStorage(): Worker_DurableObjectStorage;
+	getModuleFallback(): string;
+	setModuleFallback(value: string): void;
 	toString(): string;
 	which(): Worker_Which;
 }
