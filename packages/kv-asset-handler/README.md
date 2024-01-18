@@ -71,63 +71,71 @@ Known errors to be thrown are:
 #### ES Modules
 
 ```js
-import { getAssetFromKV, NotFoundError, MethodNotAllowedError } from '@cloudflare/kv-asset-handler'
-import manifestJSON from '__STATIC_CONTENT_MANIFEST'
-const assetManifest = JSON.parse(manifestJSON)
+import {
+	getAssetFromKV,
+	NotFoundError,
+	MethodNotAllowedError,
+} from "@cloudflare/kv-asset-handler";
+import manifestJSON from "__STATIC_CONTENT_MANIFEST";
+const assetManifest = JSON.parse(manifestJSON);
 
 export default {
 	async fetch(request, env, ctx) {
-		if (request.url.includes('/docs')) {
+		if (request.url.includes("/docs")) {
 			try {
 				return await getAssetFromKV(
 					{
 						request,
 						waitUntil(promise) {
-							return ctx.waitUntil(promise)
+							return ctx.waitUntil(promise);
 						},
 					},
 					{
 						ASSET_NAMESPACE: env.__STATIC_CONTENT,
 						ASSET_MANIFEST: assetManifest,
-					},
-				)
+					}
+				);
 			} catch (e) {
 				if (e instanceof NotFoundError) {
 					// ...
 				} else if (e instanceof MethodNotAllowedError) {
 					// ...
 				} else {
-					return new Response('An unexpected error occurred', { status: 500 })
+					return new Response("An unexpected error occurred", { status: 500 });
 				}
 			}
-		} else return fetch(request)
+		} else return fetch(request);
 	},
-}
+};
 ```
 
 #### Service Worker
 
 ```js
-import { getAssetFromKV, NotFoundError, MethodNotAllowedError } from '@cloudflare/kv-asset-handler'
+import {
+	getAssetFromKV,
+	NotFoundError,
+	MethodNotAllowedError,
+} from "@cloudflare/kv-asset-handler";
 
-addEventListener('fetch', (event) => {
-	event.respondWith(handleEvent(event))
-})
+addEventListener("fetch", (event) => {
+	event.respondWith(handleEvent(event));
+});
 
 async function handleEvent(event) {
-	if (event.request.url.includes('/docs')) {
+	if (event.request.url.includes("/docs")) {
 		try {
-			return await getAssetFromKV(event)
+			return await getAssetFromKV(event);
 		} catch (e) {
 			if (e instanceof NotFoundError) {
 				// ...
 			} else if (e instanceof MethodNotAllowedError) {
 				// ...
 			} else {
-				return new Response('An unexpected error occurred', { status: 500 })
+				return new Response("An unexpected error occurred", { status: 500 });
 			}
 		}
-	} else return fetch(event.request)
+	} else return fetch(event.request);
 }
 ```
 
@@ -176,7 +184,7 @@ let cacheControl = {
 	browserTTL: null, // do not set cache control ttl on responses
 	edgeTTL: 2 * 60 * 60 * 24, // 2 days
 	bypassCache: false, // do not bypass Cloudflare's cache
-}
+};
 ```
 
 ##### `browserTTL`
@@ -216,13 +224,13 @@ return getAssetFromKV(
 	{
 		request,
 		waitUntil(promise) {
-			return ctx.waitUntil(promise)
+			return ctx.waitUntil(promise);
 		},
 	},
 	{
 		ASSET_NAMESPACE: env.__STATIC_CONTENT,
-	},
-)
+	}
+);
 ```
 
 ##### Service Worker
@@ -244,22 +252,22 @@ In ES Modules format, this argument is required, and can be imported.
 ##### ES Module
 
 ```js
-import manifestJSON from '__STATIC_CONTENT_MANIFEST'
-let manifest = JSON.parse(manifestJSON)
-manifest['index.html'] = 'index.special.html'
+import manifestJSON from "__STATIC_CONTENT_MANIFEST";
+let manifest = JSON.parse(manifestJSON);
+manifest["index.html"] = "index.special.html";
 
 return getAssetFromKV(
 	{
 		request,
 		waitUntil(promise) {
-			return ctx.waitUntil(promise)
+			return ctx.waitUntil(promise);
 		},
 	},
 	{
 		ASSET_MANIFEST: manifest,
 		// ...
-	},
-)
+	}
+);
 ```
 
 ##### Service Worker
@@ -329,7 +337,7 @@ To turn `etags` **off**, you must bypass cache:
 /* Turn etags off */
 let cacheControl = {
 	bypassCache: true,
-}
+};
 ```
 
 #### Syntax and comparison context
