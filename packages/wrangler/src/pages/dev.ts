@@ -34,6 +34,7 @@ import type {
 	StrictYargsOptionsToInterface,
 } from "../yargs-types";
 import type { RoutesJSONSpec } from "./functions/routes-transformation";
+import { isNavigatorDefined } from "../navigator-user-agent";
 
 /*
  * DURABLE_OBJECTS_BINDING_REGEXP matches strings like:
@@ -293,6 +294,10 @@ export const Handler = async ({
 	let scriptPath = "";
 
 	const nodejsCompat = compatibilityFlags?.includes("nodejs_compat");
+	const defineNavigatorUserAgent = isNavigatorDefined(
+		compatibilityDate,
+		compatibilityFlags
+	);
 	let modules: CfModule[] = [];
 
 	if (usingWorkerDirectory) {
@@ -301,6 +306,7 @@ export const Handler = async ({
 				workerJSDirectory: workerScriptPath,
 				buildOutputDirectory: directory ?? ".",
 				nodejsCompat,
+				defineNavigatorUserAgent,
 			});
 			modules = bundleResult.modules;
 			scriptPath = bundleResult.resolvedEntryPointPath;
@@ -349,6 +355,7 @@ export const Handler = async ({
 						sourcemap: true,
 						watch: false,
 						onEnd: () => scriptReadyResolve(),
+						defineNavigatorUserAgent,
 					});
 				} catch (e: unknown) {
 					logger.warn("Failed to bundle _worker.js.", e);
@@ -402,6 +409,7 @@ export const Handler = async ({
 					nodejsCompat,
 					local: true,
 					routesModule,
+					defineNavigatorUserAgent,
 				});
 				await metrics.sendMetricsEvent("build pages functions");
 			};

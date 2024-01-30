@@ -44,6 +44,7 @@ import type { Entry } from "../deployment-bundle/entry";
 import type { CfWorkerInit, CfPlacement } from "../deployment-bundle/worker";
 import type { PutConsumerBody } from "../queues/client";
 import type { AssetPaths } from "../sites";
+import { isNavigatorDefined } from "../navigator-user-agent";
 
 type Props = {
 	config: Config;
@@ -510,6 +511,10 @@ See https://developers.cloudflare.com/workers/platform/compatibility-dates for m
 							targetConsumer: "deploy",
 							local: false,
 							projectRoot: props.projectRoot,
+							defineNavigatorUserAgent: isNavigatorDefined(
+								props.compatibilityDate ?? config.compatibility_date,
+								props.compatibilityFlags ?? config.compatibility_flags
+							),
 						}
 				  );
 
