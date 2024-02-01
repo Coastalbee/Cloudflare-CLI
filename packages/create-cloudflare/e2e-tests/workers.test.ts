@@ -12,7 +12,7 @@ import {
 	testProjectDir,
 } from "./helpers";
 import type { RunnerConfig } from "./helpers";
-import type { Suite, TestContext } from "vitest";
+import type { Suite, TaskContext } from "vitest";
 
 const TEST_TIMEOUT = 1000 * 60 * 5;
 
@@ -96,7 +96,7 @@ describe
 		const runCliWithDeploy = async (
 			template: WorkerTestConfig,
 			projectPath: string,
-			ctx: TestContext
+			ctx: TaskContext
 		) => {
 			const { argv, overrides, promptHandlers, expectResponseToContain } =
 				template;

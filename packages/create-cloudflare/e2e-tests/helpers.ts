@@ -17,7 +17,7 @@ import { fetch } from "undici";
 import { expect } from "vitest";
 import { version } from "../package.json";
 import { quoteShellArgs } from "../src/common";
-import type { Suite, TestContext } from "vitest";
+import type { Suite, TaskContext } from "vitest";
 
 export const C3_E2E_PREFIX = "c3-e2e-";
 
@@ -44,7 +44,7 @@ export type RunnerConfig = {
 	argv?: string[];
 	outputPrefix?: string;
 	quarantine?: boolean;
-	ctx: TestContext;
+	ctx: TaskContext;
 };
 
 export const runC3 = async ({
@@ -171,7 +171,7 @@ const getLogPath = (suite: Suite) => {
 	return join("./.e2e-logs/", process.env.TEST_PM as string, suiteFilename);
 };
 
-const normalizeTestName = (ctx: TestContext) => {
+const normalizeTestName = (ctx: TaskContext) => {
 	const baseName = ctx.task.name
 		.toLowerCase()
 		.replace(/\s+/g, "_") // replace any whitespace with `_`

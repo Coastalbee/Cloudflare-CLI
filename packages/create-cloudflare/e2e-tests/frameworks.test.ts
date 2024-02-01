@@ -15,7 +15,7 @@ import {
 } from "./helpers";
 import type { FrameworkMap, FrameworkName } from "../src/templates";
 import type { RunnerConfig } from "./helpers";
-import type { Suite, TestContext } from "vitest";
+import type { Suite, TaskContext } from "vitest";
 
 const TEST_TIMEOUT = 1000 * 60 * 5;
 const LONG_TIMEOUT = 1000 * 60 * 10;
@@ -204,7 +204,7 @@ describe.concurrent(`E2E: Web frameworks`, () => {
 		framework: string,
 		projectName: string,
 		projectPath: string,
-		ctx: TestContext,
+		ctx: TaskContext,
 		testCommitMessage: boolean
 	) => {
 		const { argv, overrides, promptHandlers, expectResponseToContain } =
