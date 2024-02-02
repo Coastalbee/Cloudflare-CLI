@@ -1,5 +1,36 @@
 # wrangler
 
+## 3.27.0
+
+### Minor Changes
+
+- [#4877](https://github.com/cloudflare/workers-sdk/pull/4877) [`3e7cd6e4`](https://github.com/cloudflare/workers-sdk/commit/3e7cd6e40816c5c6ab28163508a6ba9729c6de73) Thanks [@magnusdahlstrand](https://github.com/magnusdahlstrand)! - fix: Do not show unnecessary errors during watch rebuilds
+
+  When Pages is used in conjunction with a full stack framework, the framework
+  build will temporarily remove files that are being watched by Pages, such as
+  `_worker.js` and `_routes.json`.
+  Previously we would display errors for these changes, which adds confusing and excessive messages to the Pages dev output. Now builds are skipped if a watched `_worker.js` or `_routes.json` is removed.
+
+### Patch Changes
+
+- [#4888](https://github.com/cloudflare/workers-sdk/pull/4888) [`3679bc18`](https://github.com/cloudflare/workers-sdk/commit/3679bc18b2cb849fd4023ac653c06e0a7ec2195f) Thanks [@petebacondarwin](https://github.com/petebacondarwin)! - fix: ensure that the Pages dev proxy server does not change the Host header
+
+  Previously, when configuring `wrangler pages dev` to use a proxy to a 3rd party dev server,
+  the proxy would replace the Host header, resulting in problems at the dev server if it was
+  checking for cross-site scripting attacks.
+
+  Now the proxy server passes through the Host header unaltered making it invisible to the
+  3rd party dev server.
+
+  Fixes #4799
+
+* [#4830](https://github.com/cloudflare/workers-sdk/pull/4830) [`48f90859`](https://github.com/cloudflare/workers-sdk/commit/48f9085981f0a4923d3ccc32596520107c4e4df8) Thanks [@Lekensteyn](https://github.com/Lekensteyn)! - fix: listen on loopback for wrangler dev port check and login
+
+  Avoid listening on the wildcard address by default to reduce the attacker's
+  surface and avoid firewall prompts on macOS.
+
+  Relates to #4430.
+
 ## 3.26.0
 
 ### Minor Changes
